@@ -1,0 +1,30 @@
+PREFIX schema: <http://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX fossr: <http://fossr.eu/kg/onto/>
+PREFIX academia: <http://test.org/academia.owl#>
+
+CONSTRUCT {
+    ?researcher a academia:Scholar;
+        rdfs:label ?researcherLabel;
+        academia:hasAffiliationWith ?affiliation;
+        academia:coAuthorWith ?coAuthor.
+    ?affiliation a academia:University;
+        rdfs:label ?affiliationLabel.
+} WHERE {
+    ?researcher a schema:Person .
+    OPTIONAL {
+        ?researcher rdfs:label ?researcherLabel
+    }.
+    OPTIONAL {
+        ?researcher schema:affiliation ?affiliation
+        OPTIONAL {
+            ?affiliation rdfs:label ?affiliationLabel
+        }.
+    }.
+    OPTIONAL {
+        ?researcher fossr:coauthoredWith ?coAuthor
+    }
+}
+#LIMIT 100
+#ORDER BY ?pred

@@ -1,0 +1,20 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX fossr: <http://fossr.eu/kg/onto/>
+
+SELECT
+*
+WHERE {
+    ?r a schema:Person.
+    FILTER NOT EXISTS {
+  	[] a schema:ScholarlyArticle;
+    	fossr:hasAuthorAffiliation [
+    		fossr:forAuthor ?r;
+    		fossr:hasAffiliation ?a
+  		];
+    	dcterms:date ?date.
+    }
+}
+LIMIT 100
