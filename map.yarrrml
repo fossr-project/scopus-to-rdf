@@ -1,0 +1,30 @@
+prefixes:
+ ex: "http://example.com/"
+ conf: "https://w3id.org/scholarlydata/ontology/conference-ontology.owl#"
+ fabio: "http://purl.org/spar/fabio/"
+ fossr: "https://www.fossr.eu/onto#"
+ 
+mappings:
+    publication:
+        sources:
+            - ['data.json~jsonpath', '$.search-results.entry[*]']
+        s: https://www.fossr.eu/kg/scopus/publications/$(eid)
+        po:
+            - [a, conf:Document]
+            - [a, fabio:Expression]
+            - [dc:title, $("dc:title")]
+            - [dc:description, $("dc:description")]
+            - p: fossr:affiliation
+                o:
+                - mapping: affiliation
+                  condition:
+                    function: equal
+                    parameters:
+                        - [str1, $(projectID), s]
+                        - [str2, $(ID), o]
+$(affiliation[*].afid)]
+    affiliation:
+        s: https://www.fossr.eu/kg/scopus/affiliations/$(afid)
+        po:
+            - [a, foaf:Organization]
+     
