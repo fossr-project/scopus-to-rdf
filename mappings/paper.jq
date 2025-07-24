@@ -1,3 +1,5 @@
+import "author" as AUTHOR;
+
 def main:
     @uri "data:publications/\(._id)"  as $publicationId |
     (.author | length) as $num_authors |
@@ -44,19 +46,31 @@ def main:
                 },
                 "pub:contains": [
                     .author[]? | #to_entries | .[] |
-                    .value.authid as $authid |
+                    (.authid // ."@auid") as $author_id |
                     (."@seq" | tonumber) as $seq |
+                    ."preferred-name" as $preferred_name |
                     {
-                    "@id": "\($publicationId)/author-list/\($seq)",
+                        "@id": "\($publicationId)/author-list/\($seq)",
                         "@type": "AuthorItem",
                         "pub:index": $seq,
-                        "pub:relatedAuthor": {
-                            "@id": ("data:authors/" + .authid),
-                            "@type": "pub:AuthorProfile"
-                        },
+                        "pub:relatedAuthor": (
+                            {
+                                "@id": @uri "data:authors/\($author_id)",
+                                "@type": "pub:AuthorProfile"
+                            } |
+                            if $preferred_name then
+                                ."pub:hasPreferredNameVariant" = (
+                                    $preferred_name |
+                                    AUTHOR::name_variant($author_id)
+                                )
+                            end
+                        ),
                         "pub:statedAffiliation": [
-                            .afid[]? |  {"@id": ("data:affiliations/" + ."$")}
-                        ]
+                            .afid[]? |  {
+                                "@id": ("data:affiliations/" + ."$")
+                            }
+                        ],
+                        "pub:statedName": AUTHOR::name_variant($author_id)
                     } |
                     if $seq > 1 then
                         ."pub:prev" |= {
