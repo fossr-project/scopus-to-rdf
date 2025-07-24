@@ -6,7 +6,7 @@
     "dc": "http://purl.org/dc/elements/1.1/",
     "dcterms": "http://purl.org/dc/terms/",
     "prism": "http://prismstandard.org/namespaces/basic/2.0/",
-    "pub": "http://istc.cnr.it/fossr/onto/publications",
-    "ac": "http://istc.cnr.it/fossr/onto/academic-career",
+    "pub": "http://istc.cnr.it/fossr/onto/publications/",
+    "ac": "http://istc.cnr.it/fossr/onto/academic-career/",
     "data": "http://istc.cnr.it/fossr/scopus-data/"
 }
