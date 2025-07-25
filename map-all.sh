@@ -5,6 +5,7 @@ OUTPUT_DIR="data/rdf"
 MAPPING_DIR="mappings"
 JSONLD_CONTEXT_PATH="context.jsonld"
 JSONLD_OUTPUT_DIR="$OUTPUT_DIR/jsonld"
+NQ_OUTPUT_DIR="$OUTPUT_DIR/nq"
 NQ_OUTPUT="$OUTPUT_DIR/all.nq"
 
 percentBar ()  { 
@@ -25,12 +26,18 @@ JSONLD_CONTEXT=`cat $JSONLD_CONTEXT_PATH | jq '.' --compact-output`
 for MAPPING in $MAPPING_DIR/*.jq; do
     TYPE=`basename $MAPPING .jq`
 #    ITER=0
-    echo "\nMapping files of type '$TYPE'..."
+    echo ""
+    echo "### Type: $TYPE ###"
     for INPUT in $INPUT_DIR/$TYPE/*.jsonl; do
-        echo "Mapping file '$INPUT'..."
         INPUT_NAME=`basename $INPUT .jsonl`
+        # echo "$INPUT... "
         mkdir -p "$JSONLD_OUTPUT_DIR/$TYPE"
         JSONLD_OUTPUT_PREFIX="$JSONLD_OUTPUT_DIR/$TYPE/$INPUT_NAME"
+
+        mkdir -p "$NQ_OUTPUT_DIR/$TYPE"
+        NQ_OUTPUT_FOR_FILE="$NQ_OUTPUT_DIR/$TYPE/$INPUT_NAME.nq"
+        >$NQ_OUTPUT_FOR_FILE
+
         # JSONLD_LINE_OUTPUT_PREFIX="$JSONLD_OUTPUT_DIR/$TYPE/${INPUT_NAME}_line"
         # JSONLDL_OUTPUT="$JSONLD_OUTPUT_DIR/$TYPE/${INPUT_NAME}.jsonldl"
 #        OUTPUT_PREFIX=$OUTPUT_DIR/$TYPE-$ITER.jsonld
@@ -49,20 +56,18 @@ for MAPPING in $MAPPING_DIR/*.jq; do
             # echo "Perc. done '$PERC_DONE'"
 
             percentBar $PERC_DONE 24 bar
-            printf '\r\e[44;33;1m%s\e[0m at %s/%s' "$bar" $LINES_MAPPED $NUM_LINES
+            printf "\r$INPUT_NAME... \e[44;33;1m%s\e[0m %s/%s" "$bar" $LINES_MAPPED $NUM_LINES
             # printf '\r\e[47;30m %s\e[0m %s/%s' "$bar" $LINES_MAPPED $NUM_LINES
 
-            # printf '%s' "$out" >"${JSONLD_LINE_OUTPUT_PREFIX}_${ITER}.jsonld"
-            jq "." <<<"$out" >"${JSONLD_OUTPUT_PREFIX}_${ITER}.jsonld"
-            jsonld toRdf - --n-quads  <<<"$out" >>$NQ_OUTPUT
+            # jq "." <<<"$out" >"${JSONLD_OUTPUT_PREFIX}_${ITER}.jsonld"
+            jsonld toRdf - --n-quads  <<<"$out" | tee -a $NQ_OUTPUT_FOR_FILE >>$NQ_OUTPUT
             LINES_MAPPED=$(($LINES_MAPPED + 1))
         done
-        PERC_DONE=$((LINES_MAPPED * 100 / $NUM_LINES))
-        percentBar $PERC_DONE 24 bar
-        printf '\r\e[44;33;1m %s\e[0m at %s/%s\n' "$bar" $LINES_MAPPED $NUM_LINES
+        printf "\r$INPUT_NAME... done!                                    \n"
+        # PERC_DONE=$((LINES_MAPPED * 100 / $NUM_LINES))
+        # percentBar $PERC_DONE 24 bar
+        # printf '\r\e[44;33;1m %s\e[0m %s/%s\n' "$bar" $LINES_MAPPED $NUM_LINES
 #        ITER=$(expr $ITER "+" 1)
     done
-#     # echo $OUTPUT_JSON
-#     jq -f $MAPPING $INPUT_JSON >$OUTPUT_JSON
 done
 
