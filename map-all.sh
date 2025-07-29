@@ -71,3 +71,5 @@ for MAPPING in $MAPPING_DIR/*.jq; do
     done
 done
 
+echo ""
+
