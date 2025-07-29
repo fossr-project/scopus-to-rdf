@@ -20,7 +20,7 @@ def main:
                 (."@id" | tonumber) as $seq |
                 {
                     "@id": "\($publicationId)/reference-list/\($seq)",
-                    "@type": "ReferenceItem",
+                    "@type": "pub:ReferenceItem",
                     "pub:index": $seq,
                     "pub:relatedPublication": (
                         ._id = ."scopus-id" |

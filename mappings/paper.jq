@@ -51,7 +51,7 @@ def main:
                     ."preferred-name" as $preferred_name |
                     {
                         "@id": "\($publicationId)/author-list/\($seq)",
-                        "@type": "AuthorItem",
+                        "@type": "pub:AuthorItem",
                         "pub:index": $seq,
                         "pub:relatedAuthor": (
                             {
