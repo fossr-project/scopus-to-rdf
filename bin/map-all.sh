@@ -2,8 +2,8 @@
 
 INPUT_DIR="data/source-sample"
 OUTPUT_DIR="data/rdf"
-MAPPING_DIR="mappings"
-JSONLD_CONTEXT_PATH="context.jsonld"
+MAPPING_DIR="config/mappings"
+JSONLD_CONTEXT_PATH="config/context.jsonld"
 JSONLD_OUTPUT_DIR="$OUTPUT_DIR/jsonld"
 NQ_OUTPUT_DIR="$OUTPUT_DIR/nq"
 NQ_OUTPUT="$OUTPUT_DIR/all.nq"

@@ -2,7 +2,7 @@
 
 INPUT_DIR="data/source"
 OUTPUT_DIR="data/source-sample"
-MAPPING_DIR="mappings"
+MAPPING_DIR="config/mappings"
 
 for MAPPING in $MAPPING_DIR/*.jq; do
     TYPE=`basename $MAPPING .jq`
