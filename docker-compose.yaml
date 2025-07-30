@@ -1,0 +1,6 @@
+name: scopus-to-rdf
+services:
+  scopus-to-rdf-container:
+    build: .
+    volumes:
+      - ./data:/data
