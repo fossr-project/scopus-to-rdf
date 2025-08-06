@@ -14,10 +14,13 @@ JSONLD_CONTEXT=`cat $JSONLD_CONTEXT_PATH | jq '.' --compact-output`
 
 mkdir -p "$NQ_OUTPUT_DIR"
 >$NQ_OUTPUT
+echo "###############################"
+echo "### Mapping process started ###"
+echo "###############################"
 for MAPPING in $MAPPING_DIR/*.jq; do
     TYPE=`basename $MAPPING .jq`
     echo ""
-    echo "### Type: $TYPE ###"
+    echo "## Type: $TYPE ##"
     for INPUT in $INPUT_DIR/$TYPE/*.jsonl; do
         INPUT_NAME=`basename $INPUT .jsonl`
 
@@ -38,4 +41,9 @@ for MAPPING in $MAPPING_DIR/*.jq; do
         printf "finished!\n\n"
     done
 done
+echo "#################################"
+echo "### Mapping process completed ###"
+echo "#################################"
+echo ""
+
 
