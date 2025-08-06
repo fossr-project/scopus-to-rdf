@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# INPUT_DIR="data/source"
-INPUT_DIR="data/source-sample"
+INPUT_DIR="data/source"
+#INPUT_DIR="data/source-sample"
 OUTPUT_DIR="data/rdf"
 MAPPING_DIR="config/mappings"
 JSONLD_CONTEXT_PATH="config/context.jsonld"
