@@ -10,4 +10,4 @@ EOF
 COPY config ./config
 COPY bin ./bin
 
-CMD ["./bin/map-all.sh"]
+CMD ["./bin/map-all-parallel.sh"]
