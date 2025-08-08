@@ -1,0 +1,10 @@
+PREFIX pub: <http://istc.cnr.it/fossr/onto/publications/>
+
+SELECT
+	?class
+	(COUNT(1) AS ?num_instances)
+WHERE {
+    [] a ?class
+}
+GROUP BY ?class
+ORDER BY ?class
