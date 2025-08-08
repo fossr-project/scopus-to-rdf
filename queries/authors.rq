@@ -1,0 +1,20 @@
+PREFIX pub: <http://istc.cnr.it/fossr/onto/publications/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+PREFIX authors: <http://istc.cnr.it/fossr/scopus-data/authors/>
+
+SELECT
+	?author 
+	(SAMPLE(?author_name) AS ?author_name)
+	(COUNT(DISTINCT ?pub) AS ?pub_count)
+WHERE {
+    ?author a pub:AuthorProfile.
+    OPTIONAL{?author pub:hasPreferredNameVariant/pub:fullName ?author_name}
+    OPTIONAL{?pub pub:hasAuthorList/pub:contains/pub:relatedAuthor ?author}
+    
+    # Workaround to mapping bug
+    FILTER(?author != authors:null)
+}
+GROUP BY ?author
+ORDER BY DESC(?pub_count)
+LIMIT 100

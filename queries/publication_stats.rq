@@ -1,0 +1,28 @@
+PREFIX pub: <http://istc.cnr.it/fossr/onto/publications/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+
+SELECT
+    ?pub
+    (SAMPLE(?title) as ?title)
+    (SAMPLE(?date) as ?date)
+    (COUNT(DISTINCT ?authorListItem) as ?num_authors)
+    (COUNT(DISTINCT ?referenced_pub) as ?num_references)
+    (COUNT(DISTINCT ?referencing_pub) as ?num_citations)
+WHERE {
+    ?pub a pub:Publication.
+    OPTIONAL {?pub dc:title ?title}
+    OPTIONAL {?pub prism:coverDate ?date}
+    OPTIONAL {
+    	?pub pub:hasAuthorList/pub:contains ?authorListItem
+    }
+    OPTIONAL {
+    	?pub pub:hasReferenceList/pub:contains/pub:relatedPublication ?referenced_pub
+    }
+    OPTIONAL {
+	    ?referencing_pub pub:hasReferenceList/pub:contains/pub:relatedPublication ?pub
+    }
+}
+GROUP BY ?pub
+ORDER BY DESC(?num_citations)
+LIMIT 100

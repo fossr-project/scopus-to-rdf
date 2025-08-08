@@ -1,0 +1,22 @@
+PREFIX pub: <http://istc.cnr.it/fossr/onto/publications/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+
+SELECT * WHERE {
+    ?pub a pub:Publication.
+    OPTIONAL {?pub dc:title ?title}
+    OPTIONAL {?pub prism:coverDate ?date}
+    OPTIONAL {
+    	?pub pub:hasAuthorList/pub:contains [
+        	pub:relatedAuthor ?author;
+            pub:index ?authorOrder
+    	]
+    }
+    OPTIONAL {
+    	?pub pub:hasReferenceList/pub:contains/pub:relatedPublication ?referenced_pub
+    }
+    OPTIONAL {
+	    ?referencing_pub pub:hasReferenceList/pub:contains/pub:relatedPublication ?pub
+    }
+}
+LIMIT 100
