@@ -43,9 +43,16 @@ cd scopus-to-rdf
 docker compose up -d
 ```
 
+The mapping is run in parallel with a default of 32 (potentially) parallel jobs.
+This number can be changed using the `NUM_JOBS` environment variable in `map-all-parallel.sh`.
+
 ## Check results
 
-The resulting RDF triples are saved in the `data/rdf` folder as N-Triples files, both all together in the `all.nt` file and separated by each input file.
+The resulting RDF triples are saved in the `data/rdf` folder as N-Triples files, both all together in the `all.nt.gz` file and separated by each input file.
+
+The triples are also available split by the jobs that computed them in the files `all_1.nt`, `all_2.nt`, ...
+These files can be useful if the complete file is too big to upload to the triple store.
+
 Below the new structure correponding to the example above is shown.
 
 ```
@@ -71,6 +78,9 @@ Below the new structure correponding to the example above is shown.
 │       │   └── paper_2024.nt
 │       ├── paper-references
 │       │   └── author.nt
-│       └── all.nt
+│       ├── all.nt.gz
+│       ├── all_1.nt
+│       ├── all_2.nt
+│       ├── ...
 │ ...
 ```
