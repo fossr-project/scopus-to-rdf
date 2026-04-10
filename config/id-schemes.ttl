@@ -1,0 +1,35 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX pub: <https://w3id.org/fossr/onto/publications/>
+PREFIX orgs: <https://w3id.org/fossr/data/orgs/>
+PREFIX schemes: <https://w3id.org/fossr/data/schemes/>
+PREFIX scopus_schemes: <https://w3id.org/fossr/data/schemes/scopus/>
+
+orgs:scopus a pub:Issuer;
+    rdfs:label "Scopus"@en;
+    rdfs:comment "A scientific abstract and citation database by Elsevier"@en.
+
+scopus_schemes:author-ids a pub:ConceptScheme;
+    rdfs:label "Scopus Author IDs"@en;
+    rdfs:comment "The scheme of author IDs used in Scopus"@en;
+    pub:providedBy orgs:scopus.
+
+scopus_schemes:pubblication-ids a pub:ConceptScheme;
+    rdfs:label "Scopus Pubblication IDs"@en;
+    rdfs:comment "The scheme of pubblication IDs used in Scopus"@en;
+    pub:providedBy orgs:scopus.
+
+scopus_schemes:affiliation-ids a pub:ConceptScheme;
+    rdfs:label "Scopus Affiliation IDs"@en;
+    rdfs:comment "The scheme of affiliation IDs used in Scopus"@en;
+    pub:providedBy orgs:scopus.
+
+orgs:idf a pub:Issuer;
+    rdfs:label "International DOI Foundation (IDF)"@en;
+    rdfs:comment "Organization in charge with the development and administration of DOIs"@en.
+
+schemes:doi a pub:ConceptScheme;
+    rdfs:label "Digital Object Identifiers (DOIs)"@en;
+    rdfs:comment "The scheme of Digital Object Identifiers"@en;
+    pub:providedBy orgs:idf.
+
+

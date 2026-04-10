@@ -1,4 +1,4 @@
-PREFIX pub: <http://istc.cnr.it/fossr/onto/publications/>
+PREFIX pub: <https://w3id.org/fossr/onto/publications/>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
 
@@ -17,10 +17,10 @@ WHERE {
     	?pub pub:hasAuthorList/pub:contains ?authorListItem
     }
     OPTIONAL {
-    	?pub pub:hasReferenceList/pub:contains/pub:relatedPublication ?referenced_pub
+    	?pub pub:hasReferenceList/pub:contains/pub:hasItemContent ?referenced_pub
     }
     OPTIONAL {
-	    ?referencing_pub pub:hasReferenceList/pub:contains/pub:relatedPublication ?pub
+	    ?referencing_pub pub:hasReferenceList/pub:contains/pub:hasItemContent ?pub
     }
 }
 GROUP BY ?pub

@@ -1,4 +1,4 @@
-PREFIX pub: <http://istc.cnr.it/fossr/onto/publications/>
+PREFIX pub: <https://w3id.org/fossr/onto/publications/>
 
 SELECT
 	?class

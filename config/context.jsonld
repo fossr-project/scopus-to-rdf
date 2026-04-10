@@ -6,7 +6,16 @@
     "dc": "http://purl.org/dc/elements/1.1/",
     "dcterms": "http://purl.org/dc/terms/",
     "prism": "http://prismstandard.org/namespaces/basic/2.0/",
-    "pub": "http://istc.cnr.it/fossr/onto/publications/",
-    "ac": "http://istc.cnr.it/fossr/onto/academic-career/",
-    "data": "http://istc.cnr.it/fossr/scopus-data/"
+    "pub": "https://w3id.org/fossr/onto/publications/",
+    "ac": "https://w3id.org/fossr/onto/academic-career/",
+    "data": "https://w3id.org/fossr/data/scopus/",
+    "schemes": "https://w3id.org/fossr/data/schemes/",
+    "inScheme": {
+        "@id": "pub:inScheme",
+        "@type": "@id"
+    },
+    "isCitedBy": {
+        "@reverse": "pub:containsReferenceTo",
+        "@type": "@id"
+    }
 }

@@ -1,7 +1,7 @@
-PREFIX pub: <http://istc.cnr.it/fossr/onto/publications/>
+PREFIX pub: <https://w3id.org/fossr/onto/publications/>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
-PREFIX authors: <http://istc.cnr.it/fossr/scopus-data/authors/>
+PREFIX authors: <https://w3id.org/fossr/data/scopus/authors/>
 
 SELECT
 	?author 
@@ -9,8 +9,8 @@ SELECT
 	(COUNT(DISTINCT ?pub) AS ?pub_count)
 WHERE {
     ?author a pub:AuthorProfile.
-    OPTIONAL{?author pub:hasPreferredNameVariant/pub:fullName ?author_name}
-    OPTIONAL{?pub pub:hasAuthorList/pub:contains/pub:relatedAuthor ?author}
+    OPTIONAL{?author pub:hasPreferredName/pub:fullName ?author_name}
+    OPTIONAL{?pub pub:hasAuthorList/pub:contains/pub:hasItemContent ?author}
     
     # Workaround to mapping bug
     FILTER(?author != authors:null)
